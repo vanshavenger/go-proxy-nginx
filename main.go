@@ -8,9 +8,14 @@ import (
 	"github.com/vanshavenger/goproxynginx/utils"
 )
 
+const (
+	// DefaultConfigPath is the default configuration file path
+	DefaultConfigPath = "config.yaml"
+)
+
 func main() {
-	configPtr := flag.String("config", "config.yaml", "Configuration file")
-	flag.StringVar(configPtr, "c", "config.yaml", "Configuration file (shorthand)")
+	configPtr := flag.String("config", DefaultConfigPath, "Configuration file")
+	flag.StringVar(configPtr, "c", DefaultConfigPath, "Configuration file (shorthand)")
 	flag.Parse()
 
 	fileContents, err := utils.ParseYAMLConfig(*configPtr)
