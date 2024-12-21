@@ -17,6 +17,7 @@ func CreateServer(config *utils.RootConfig) {
 		workersCount = runtime.NumCPU()
 	}
 	workerPool := make(chan *Worker, workersCount)
+    defer close(workerPool)
 	for i := 0; i < workersCount; i++ {
 		worker := newWorker(config)
 		workerPool <- worker
