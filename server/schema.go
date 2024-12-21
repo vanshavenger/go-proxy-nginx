@@ -24,6 +24,6 @@ type WorkerMessageReply struct {
 // Worker represents a worker
 type Worker struct {
 	config        *utils.RootConfig
-	upstreamIndex int
+	upstreamIndex uint32
 	mu            sync.Mutex
 }

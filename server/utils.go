@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"sync/atomic"
 
 	"github.com/vanshavenger/goproxynginx/utils"
 )
@@ -21,9 +22,8 @@ func (w *Worker) FindMatchingRule(url string) *utils.Rule {
 
 // GetNextUpstream gets the next upstream server for a given rule
 func (w *Worker) GetNextUpstream(rule *utils.Rule) string {
-	upstreamID := rule.Upstreams[w.upstreamIndex%len(rule.Upstreams)]
-	w.upstreamIndex++
-	return upstreamID
+	index := atomic.AddUint32(&w.upstreamIndex, 1)
+	return rule.Upstreams[int(index)%len(rule.Upstreams)]
 }
 
 // FindUpstream finds an upstream server by ID
